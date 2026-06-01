@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Scheme Preview — Speech Generation Wiki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Preview chrome ── */
+    body {
+      background: #e8ecf0;
+      min-height: 100vh;
+      padding: 2rem;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .preview-header {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+    .preview-header h1 { font-size: 1.3rem; color: #1e293b; font-weight: 600; }
+    .preview-header p  { color: #64748b; font-size: 0.85rem; margin-top: 0.25rem; }
+
+    .theme-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .theme-nav a {
+      font-size: 0.85rem;
+      color: #2563eb;
+      text-decoration: none;
+      padding: 0.4rem 1rem;
+      background: #fff;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      font-weight: 500;
+    }
+    .theme-nav a:hover { background: #f1f5f9; }
+
+    .theme-section {
+      margin-bottom: 3rem;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.07);
+    }
+
+    .theme-badge {
+      font-family: system-ui, sans-serif;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.1rem;
+    }
+    .theme-light    .theme-badge { background: #dde3ea; color: #334155; }
+    .theme-dark-navy.theme-badge,
+    .theme-dark-navy > .theme-badge { background: #010720; color: #94a3b8; }
+    .theme-dark-std > .theme-badge  { background: #0c0c0e; color: #94a3b8; }
+
+    /* ── Theme variables ── */
+    .theme-light .qpage {
+      --bg:        #F8FAFC;
+      --border:    #E2E8F0;
+      --muted:     #64748B;
+      --body:      #334155;
+      --heading:   #0F172A;
+      --link:      #2563EB;
+      --hover:     #14B8A6;
+      --hl:        rgba(14,165,233,0.10);
+      --text-hl:   rgba(217,119,6,0.32);
+    }
+    .theme-dark-navy .qpage {
+      --bg:        #020B3A;
+      --border:    #0E1F5A;
+      --muted:     #94A3B8;
+      --body:      #D8E1F0;
+      --heading:   #FFFFFF;
+      --link:      #20E3FF;
+      --hover:     #1FE5D3;
+      --hl:        rgba(32,227,255,0.09);
+      --text-hl:   rgba(247,184,75,0.38);
+    }
+    .theme-dark-std .qpage {
+      --bg:        #161618;
+      --border:    #2D2D32;
+      --muted:     #94A3B8;
+      --body:      #D8E1F0;
+      --heading:   #EBEBEC;
+      --link:      #20E3FF;
+      --hover:     #1FE5D3;
+      --hl:        rgba(32,227,255,0.09);
+      --text-hl:   rgba(247,184,75,0.38);
+    }
+
+    /* ── Quartz page layout ── */
+    .qpage {
+      display: grid;
+      grid-template-columns: 240px 1fr 240px;
+      min-height: 580px;
+      background: var(--bg);
+      font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif;
+      font-size: 16px;
+      color: var(--body);
+    }
+
+    /* Left sidebar */
+    .sidebar-l {
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.1rem;
+    }
+
+    .site-title {
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--heading);
+      display: block;
+      margin-bottom: 1.1rem;
+      line-height: 1.3;
+    }
+
+    .search-mock {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.38rem 0.7rem;
+      background: var(--hl);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      font-size: 0.83rem;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+    }
+
+    .sb-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+      margin-top: 0.1rem;
+    }
+
+    .ex-folder {
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: var(--heading);
+      padding: 0.28rem 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .ex-item {
+      font-size: 0.84rem;
+      color: var(--body);
+      padding: 0.18rem 0.3rem 0.18rem 1.2rem;
+      border-radius: 4px;
+    }
+    .ex-item.active {
+      color: var(--link);
+      background: var(--hl);
+    }
+
+    /* Main content */
+    .content {
+      padding: 1.75rem 2.25rem;
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .breadcrumbs {
+      font-size: 0.79rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .breadcrumbs a { color: var(--link); text-decoration: none; }
+
+    .article-title {
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--heading);
+      line-height: 1.2;
+      margin-bottom: 0.55rem;
+    }
+
+    .cmeta {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.73rem;
+      padding: 0.12rem 0.5rem;
+      background: var(--hl);
+      color: var(--link);
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .content h2 {
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--heading);
+      margin: 1.6rem 0 0.65rem;
+      padding-bottom: 0.28rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .content p {
+      line-height: 1.75;
+      color: var(--body);
+      margin-bottom: 0.85rem;
+      font-size: 1rem;
+    }
+
+    .content a {
+      color: var(--link);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .content a:hover { color: var(--hover); border-bottom-color: var(--hover); }
+
+    .content code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.83em;
+      background: var(--hl);
+      padding: 0.13em 0.42em;
+      border-radius: 3px;
+      color: var(--heading);
+      border: 1px solid var(--border);
+    }
+
+    .content pre {
+      background: var(--hl);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.9rem 1.1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.83rem;
+      color: var(--body);
+      overflow-x: auto;
+      margin-bottom: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .content blockquote {
+      border-left: 3px solid var(--link);
+      padding: 0.45rem 0.9rem;
+      margin: 0.9rem 0;
+      background: var(--hl);
+      border-radius: 0 5px 5px 0;
+    }
+    .content blockquote p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin-bottom: 0.9rem;
+    }
+    .content th {
+      text-align: left;
+      padding: 0.45rem 0.7rem;
+      background: var(--hl);
+      color: var(--heading);
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border-bottom: 2px solid var(--border);
+    }
+    .content td {
+      padding: 0.45rem 0.7rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--body);
+    }
+    .content tr:last-child td { border-bottom: none; }
+    .content tr:hover td { background: var(--hl); }
+
+    .callout {
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--hover);
+      border-radius: 6px;
+      padding: 0.7rem 0.95rem;
+      margin-bottom: 0.9rem;
+      background: var(--hl);
+    }
+    .callout-title {
+      font-weight: 600;
+      color: var(--hover);
+      font-size: 0.88rem;
+      margin-bottom: 0.2rem;
+    }
+    .callout p { margin-bottom: 0; font-size: 0.88rem; }
+
+    .content ul {
+      padding-left: 1.3rem;
+      margin-bottom: 0.85rem;
+    }
+    .content ul li {
+      color: var(--body);
+      line-height: 1.7;
+      margin-bottom: 0.18rem;
+    }
+
+    .wlink {
+      background: var(--text-hl);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    /* Right sidebar */
+    .sidebar-r {
+      padding: 1.5rem 1.1rem;
+    }
+
+    .sb-section { margin-bottom: 1.6rem; }
+
+    .toc-item {
+      font-size: 0.84rem;
+      color: var(--link);
+      text-decoration: none;
+      display: block;
+      padding: 0.18rem 0 0.18rem 0.7rem;
+      border-left: 2px solid var(--border);
+      margin-bottom: 0.12rem;
+      line-height: 1.4;
+    }
+    .toc-item.active { border-left-color: var(--link); font-weight: 600; }
+    .toc-item.h3 { padding-left: 1.4rem; font-size: 0.79rem; color: var(--muted); }
+
+    .bl-item { margin-bottom: 0.55rem; }
+    .bl-item a { font-size: 0.84rem; color: var(--link); text-decoration: none; display: block; }
+    .bl-item a:hover { color: var(--hover); }
+    .bl-excerpt { font-size: 0.77rem; color: var(--muted); line-height: 1.4; margin-top: 0.08rem; }
+
+    hr.divider { border: none; border-top: 1px solid var(--border); margin: 1.1rem 0; }
+  </style>
+</head>
+<body>
+
+  <div class="preview-header">
+    <h1>Color Scheme Preview — Speech Generation Wiki</h1>
+    <p>Static preview · delete after decision</p>
+  </div>
+
+  <div class="theme-nav">
+    <a href="#light">☀️ Light Mode</a>
+    <a href="#dark-navy">🌙 Dark — Deep Navy</a>
+    <a href="#dark-std">🌙 Dark — Standard</a>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       LIGHT MODE
+  ══════════════════════════════════════ -->
+  <div class="theme-section theme-light" id="light">
+    <div class="theme-badge">☀️ Light Mode — Identity Guide</div>
+    <div class="qpage" id="page-template">
+
+      <aside class="sidebar-l">
+        <span class="site-title">Speech Generation Wiki</span>
+        <div class="search-mock">🔍&nbsp; Search…</div>
+        <div class="sb-label">Explorer</div>
+        <div class="ex-folder">▾ Papers</div>
+        <div class="ex-item active">F5-TTS</div>
+        <div class="ex-item">CosyVoice 2</div>
+        <div class="ex-item">VALL-E</div>
+        <div class="ex-item">Seed-TTS</div>
+        <div class="ex-folder">▾ Concepts</div>
+        <div class="ex-item">Flow Matching</div>
+        <div class="ex-item">Neural Codec</div>
+        <div class="ex-item">Zero-Shot TTS</div>
+        <div class="ex-folder">▸ Venues</div>
+      </aside>
+
+      <main class="content">
+        <div class="breadcrumbs">
+          <a href="#">Papers</a> › <span>F5-TTS</span>
+        </div>
+
+        <div class="article-title">F5-TTS: A Fairytaler that Fakes Fluent and Faithful Speech with Flow Matching</div>
+
+        <div class="cmeta">
+          <span>May 26, 2026</span>
+          <span>·</span>
+          <span>6 min read</span>
+          <span>·</span>
+          <span class="tag">TTS</span>
+          <span class="tag">flow-matching</span>
+          <span class="tag">zero-shot</span>
+        </div>
+
+        <p>F5-TTS introduces a fully non-autoregressive TTS system built on <a href="#">flow matching</a> over mel-spectrograms. By concatenating noisy speech with a text representation, the model achieves high-fidelity zero-shot synthesis without an autoregressive language model backbone.</p>
+
+        <blockquote><p>Achieving SIM-o 0.671 on Seed-TTS-eval-en — competitive with closed-source systems — using a simple DiT backbone trained on 95K hours of English and Mandarin speech.</p></blockquote>
+
+        <h2>Architecture</h2>
+
+        <p>The system uses a <a href="#">DiT (Diffusion Transformer)</a> conditioned on character-level text sequences. Unlike prior work relying on <code>phoneme alignment</code>, F5-TTS uses a <code>Voicebox</code>-style infilling objective, treating synthesis as masked speech generation. The <a href="#" class="wlink">flow matching</a> decoder runs 32 Euler steps at inference.</p>
+
+        <div class="callout">
+          <div class="callout-title">💡 Key finding</div>
+          <p>Replacing the Gaussian source distribution with a learned prior (OZSpeech) reduces inference to a single step (NFE=1), trained on only 500 hours — no quality loss on WER or SIM.</p>
+        </div>
+
+        <h2>Evaluation Results</h2>
+
+        <table>
+          <thead>
+            <tr><th>Model</th><th>WER ↓</th><th>SIM-o ↑</th><th>NFE</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="#">F5-TTS</a></td><td>1.73%</td><td>0.671</td><td>32</td></tr>
+            <tr><td><a href="#">E2-TTS</a></td><td>1.97%</td><td>0.670</td><td>32</td></tr>
+            <tr><td><a href="#">CosyVoice 2</a></td><td>1.45%</td><td>0.706</td><td>10</td></tr>
+            <tr><td>Ground Truth</td><td>2.33%</td><td>0.730</td><td>—</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Related Concepts</h2>
+        <ul>
+          <li><a href="#">Flow Matching</a> — the core synthesis mechanism, 32 Euler steps</li>
+          <li><a href="#">Neural Codec</a> — not used; mel-spectrogram-based instead</li>
+          <li><a href="#">Zero-Shot TTS</a> — enabled via 3-second reference audio conditioning</li>
+          <li><a href="#">GAN Vocoder</a> — vocoder stage uses BigVGAN for waveform synthesis</li>
+        </ul>
+      </main>
+
+      <aside class="sidebar-r">
+        <div class="sb-section">
+          <div class="sb-label">On this page</div>
+          <a class="toc-item active" href="#">Architecture</a>
+          <a class="toc-item h3" href="#">DiT backbone</a>
+          <a class="toc-item h3" href="#">Training objective</a>
+          <a class="toc-item" href="#">Evaluation Results</a>
+          <a class="toc-item" href="#">Related Concepts</a>
+        </div>
+
+        <hr class="divider">
+
+        <div class="sb-section">
+          <div class="sb-label">Backlinks</div>
+          <div class="bl-item">
+            <a href="#">Flow Matching</a>
+            <div class="bl-excerpt">F5-TTS uses flow matching over mel-spectrograms with a DiT backbone…</div>
+          </div>
+          <div class="bl-item">
+            <a href="#">Zero-Shot TTS</a>
+            <div class="bl-excerpt">F5-TTS (336M) achieves SIM-o 0.671 on Seed-TTS-eval-en…</div>
+          </div>
+          <div class="bl-item">
+            <a href="#">ACL 2025</a>
+            <div class="bl-excerpt">Long paper #313, Shanghai Jiao Tong University</div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       DARK — DEEP NAVY
+  ══════════════════════════════════════ -->
+  <div class="theme-section theme-dark-navy" id="dark-navy">
+    <div class="theme-badge">🌙 Dark Mode — Deep Navy (Identity Guide · bg #020B3A)</div>
+    <div class="qpage"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       DARK — STANDARD
+  ══════════════════════════════════════ -->
+  <div class="theme-section theme-dark-std" id="dark-std">
+    <div class="theme-badge">🌙 Dark Mode — Standard (Neutral Dark · bg #161618 + Guide Accents)</div>
+    <div class="qpage"></div>
+  </div>
+
+  <script>
+    const tpl = document.getElementById('page-template').innerHTML;
+    document.querySelectorAll('.theme-dark-navy .qpage, .theme-dark-std .qpage').forEach(el => {
+      el.innerHTML = tpl;
+    });
+  </script>
+
+</body>
+</html>
