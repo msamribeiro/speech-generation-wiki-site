@@ -1,3 +1,45 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+// h2 section separator
+h2 {
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--lightgray);
+}
+
+// Blockquote: filled background + rounded right edge
+blockquote {
+  background-color: var(--highlight);
+  border-radius: 0 5px 5px 0;
+  padding: 0.45rem 0.9rem;
+}
+
+// Inline code: add border to match preview identity
+code {
+  border: 1px solid var(--lightgray);
+}
+
+// Table header: uppercase + highlight fill
+th {
+  background-color: var(--highlight);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 0.78rem;
+}
+
+// Table row hover
+tr:hover td {
+  background-color: var(--highlight);
+}
+
+// Internal wiki links: replace pill with reveal-on-hover underline
+a.internal {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-bottom-color 0.2s ease;
+
+  &:hover {
+    border-bottom-color: var(--tertiary);
+  }
+}
