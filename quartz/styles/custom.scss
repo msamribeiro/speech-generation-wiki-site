@@ -43,3 +43,76 @@ a.internal {
     border-bottom-color: var(--tertiary);
   }
 }
+
+// Tag chips: restore chip look specifically for tag links
+a.internal.tag-link {
+  display: inline-block;
+  font-size: 0.73rem;
+  padding: 0.12rem 0.5rem;
+  background-color: var(--highlight);
+  color: var(--secondary);
+  border-radius: 4px;
+  border: 1px solid var(--lightgray);
+  line-height: 1.6;
+
+  &:hover {
+    border-bottom-color: transparent;
+    color: var(--tertiary);
+  }
+}
+
+// TOC: left-border bar interaction (.quartz/plugins/table-of-contents is gitignored)
+ul.toc-content.overflow {
+  & > li > a {
+    color: var(--secondary);
+    opacity: 1;
+    font-size: 0.84rem;
+    display: block;
+    padding: 0.18rem 0 0.18rem 0.6rem;
+    border-left: 2px solid var(--lightgray);
+    margin-bottom: 0.1rem;
+    line-height: 1.4;
+    transition: 0.3s ease color, 0.3s ease border-color;
+
+    &.in-view {
+      border-left-color: var(--secondary);
+      font-weight: 600;
+    }
+  }
+
+  & li.depth-1 > a,
+  & li.depth-2 > a,
+  & li.depth-3 > a {
+    font-size: 0.79rem;
+    color: var(--gray);
+    padding-left: 1.3rem;
+  }
+
+  @for $i from 0 through 6 {
+    & .depth-#{$i} {
+      padding-left: 0;
+    }
+  }
+}
+
+// Backlinks: item spacing + font size (.quartz/plugins/backlinks is gitignored)
+.backlinks > ul.overflow > li {
+  margin-bottom: 0.45rem;
+
+  & > a {
+    font-size: 0.84rem;
+    background-color: transparent;
+  }
+}
+
+// Content meta: muted color + dot separator (.quartz/plugins/content-meta is gitignored)
+.content-meta {
+  color: var(--gray);
+  font-size: 0.81rem;
+
+  &[show-comma="true"] {
+    > *:not(:last-child)::after {
+      content: " ·";
+    }
+  }
+}
