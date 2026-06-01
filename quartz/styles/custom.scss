@@ -1,5 +1,30 @@
 @use "./variables.scss" as *;
 
+// Right sidebar: section heading style + dividers
+.sidebar.right {
+  .toc button.toc-header {
+    color: var(--gray);
+  }
+
+  .toc button.toc-header h3,
+  .graph h3,
+  .backlinks h3 {
+    font-size: 0.7rem;
+    font-family: var(--bodyFont);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--gray);
+    margin: 0 0 0.4rem 0;
+  }
+
+  .backlinks,
+  .graph {
+    border-top: 1px solid var(--lightgray);
+    padding-top: 1.1rem;
+  }
+}
+
 // Page title: match preview size (plugin default is 1.75rem)
 .page-title {
   font-size: 1rem;
