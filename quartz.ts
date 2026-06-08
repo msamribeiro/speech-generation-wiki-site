@@ -11,7 +11,8 @@ ExternalPlugin.Explorer({
   filterFn: (node) =>
     node.slugSegment !== "tags" &&
     node.slugSegment !== "_evidence" &&
-    node.slugSegment !== "comparisons",
+    node.slugSegment !== "comparisons" &&
+    node.slugSegment !== "readme",
   mapFn: (node) => {
     if (node.slugSegment === "papers") {
       node.children = []
