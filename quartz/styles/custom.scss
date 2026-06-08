@@ -137,6 +137,11 @@ ul.toc-content.overflow {
   }
 }
 
+// Folder index pages: hide auto-generated page listing (index.md provides the content)
+.page-listing {
+  display: none;
+}
+
 // Content meta: muted color + dot separator (.quartz/plugins/content-meta is gitignored)
 .content-meta {
   color: var(--gray);
