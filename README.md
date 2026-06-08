@@ -1,17 +1,55 @@
-# Quartz v5
+# Speech Generation Research Wiki — Site
 
-> “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
+The Quartz v5 static site that publishes the [Speech Generation Research Wiki](https://msamribeiro.github.io/speech-generation-wiki-site) to GitHub Pages.
 
-Quartz is a set of tools that helps you publish your [digital garden](https://jzhao.xyz/posts/networked-thought) and notes as a website for free.
+Wiki content lives in a separate repo ([msamribeiro/speech-generation-wiki](https://github.com/msamribeiro/speech-generation-wiki)) and is pulled in here as a git submodule under `content/`.
 
-🔗 Read the documentation and get started: https://quartz.jzhao.xyz/
+---
 
-[Join the Discord Community](https://discord.gg/cRFFHYye7t)
+## Live site
 
-## Sponsors
+**https://msamribeiro.github.io/speech-generation-wiki-site**
 
-<p align="center">
-  <a href="https://github.com/sponsors/jackyzha0">
-    <img src="https://cdn.jsdelivr.net/gh/jackyzha0/jackyzha0/sponsorkit/sponsors.svg" />
-  </a>
-</p>
+---
+
+## Local development
+
+```bash
+# Clone with submodule
+git clone --recurse-submodules https://github.com/msamribeiro/speech-generation-wiki-site
+
+# Pull latest wiki content
+git submodule update --remote content
+
+# Build
+npx quartz build
+
+# Dev server (http://localhost:8080)
+npx quartz build --serve
+```
+
+---
+
+## Repository structure
+
+```
+quartz.config.yaml           # Site config: title, base URL, theme, plugins
+quartz.ts                    # Explorer sidebar configuration
+quartz/styles/custom.scss    # All CSS overrides (edit this, not .quartz/)
+quartz/styles/callouts.scss  # Callout type colors
+quartz/styles/variables.scss # Layout variables: sidebar width, breakpoints
+content/                     # Git submodule → msamribeiro/speech-generation-wiki
+.github/workflows/deploy.yml # GitHub Pages deployment on push to main
+```
+
+---
+
+## Deployment
+
+Pushing to `main` triggers the GitHub Actions workflow, which builds the site and deploys `public/` to GitHub Pages.
+
+---
+
+## Content
+
+See [msamribeiro/speech-generation-wiki](https://github.com/msamribeiro/speech-generation-wiki) for the wiki content — paper pages, concept pages, coverage, and pipeline details.
