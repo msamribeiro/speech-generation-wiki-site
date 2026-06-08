@@ -35,24 +35,24 @@
   --callout-icon-fold: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cpolyline points="6 9 12 15 18 9"%3E%3C/polyline%3E%3C/svg%3E');
 
   &[data-callout] {
-    --color: #448aff;
-    --border: #448aff44;
-    --bg: #448aff10;
+    --color: #6366F1;
+    --border: #6366F144;
+    --bg: #6366F110;
     --callout-icon: var(--callout-icon-note);
   }
 
   &[data-callout="abstract"] {
-    --color: #00b0ff;
-    --border: #00b0ff44;
-    --bg: #00b0ff10;
+    --color: #3B82F6;
+    --border: #3B82F644;
+    --bg: #3B82F610;
     --callout-icon: var(--callout-icon-abstract);
   }
 
   &[data-callout="info"],
   &[data-callout="todo"] {
-    --color: #00b8d4;
-    --border: #00b8d444;
-    --bg: #00b8d410;
+    --color: #0EA5E9;
+    --border: #0EA5E944;
+    --bg: #0EA5E910;
     --callout-icon: var(--callout-icon-info);
   }
 
@@ -61,9 +61,9 @@
   }
 
   &[data-callout="tip"] {
-    --color: #00bfa5;
-    --border: #00bfa544;
-    --bg: #00bfa510;
+    --color: #0891B2;
+    --border: #0891B244;
+    --bg: #0891B210;
     --callout-icon: var(--callout-icon-tip);
   }
 
