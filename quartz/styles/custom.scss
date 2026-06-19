@@ -50,12 +50,39 @@ code {
   border: 1px solid var(--lightgray);
 }
 
-// Table header: uppercase + highlight fill
+// Table header: uppercase + highlight fill + sort indicators
 th {
   background-color: var(--highlight);
   text-transform: uppercase;
   letter-spacing: 0.03em;
   font-size: 0.78rem;
+}
+
+th[data-sortable] {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  padding-right: 1.4em;
+
+  &::after {
+    position: absolute;
+    right: 0.35em;
+    top: 50%;
+    transform: translateY(-50%);
+    content: "\2195";
+    opacity: 0.3;
+    font-size: 0.7em;
+  }
+
+  &[data-sort-dir="asc"]::after {
+    content: "\25B2";
+    opacity: 0.8;
+  }
+
+  &[data-sort-dir="desc"]::after {
+    content: "\25BC";
+    opacity: 0.8;
+  }
 }
 
 // Table row hover

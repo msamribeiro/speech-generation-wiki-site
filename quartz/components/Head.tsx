@@ -94,6 +94,7 @@ export default (() => {
         <link rel="icon" href={iconPath} />
         <meta name="description" content={description} />
         <meta name="generator" content="Quartz" />
+        <script src={joinSegments(baseDir, "static/sortable-tables.js")} defer={true}></script>
 
         {css.map((resource) => CSSResourceToStyleElement(resource, true))}
         {js
