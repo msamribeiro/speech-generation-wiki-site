@@ -23,6 +23,26 @@ ExternalPlugin.Explorer({
       node.isFolder = false
     }
   },
+  // NOTE: sortFn is serialized via .toString() and rebuilt with `new Function` in the
+  // browser, so it cannot close over module-level constants — the order list must be
+  // inlined here.
+  sortFn: (a, b) => {
+    const sidebarOrder = ["start", "overview", "concepts", "papers", "log"]
+    const aRank = sidebarOrder.indexOf(a.slugSegment ?? "")
+    const bRank = sidebarOrder.indexOf(b.slugSegment ?? "")
+    if (aRank !== -1 || bRank !== -1) {
+      if (aRank === -1) return 1
+      if (bRank === -1) return -1
+      return aRank - bRank
+    }
+    if ((!a.isFolder && !b.isFolder) || (a.isFolder && b.isFolder)) {
+      return (a.displayName || "").localeCompare(b.displayName || "", undefined, {
+        numeric: true,
+        sensitivity: "base",
+      })
+    }
+    return !a.isFolder && b.isFolder ? 1 : -1
+  },
 })
 
 const config = await loadQuartzConfig()
