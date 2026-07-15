@@ -5,8 +5,8 @@ import * as ExternalPlugin from "./.quartz/plugins"
 // - tags/: default Quartz exclusion preserved
 // - _evidence/: internal evidence-digest folder under concepts/, not for direct navigation
 // - comparisons/: currently empty
-// - papers/: shown as a single clickable link to papers/index.md; children cleared so
-//   800+ individual paper entries don't expand beneath it
+// - papers/, concepts/: shown as a single clickable link to their index.md; children
+//   cleared so hundreds of individual paper/concept entries don't expand beneath them
 ExternalPlugin.Explorer({
   filterFn: (node) =>
     node.slugSegment !== "tags" &&
@@ -14,7 +14,7 @@ ExternalPlugin.Explorer({
     node.slugSegment !== "comparisons" &&
     node.slugSegment !== "readme",
   mapFn: (node) => {
-    if (node.slugSegment === "papers") {
+    if (node.slugSegment === "papers" || node.slugSegment === "concepts") {
       node.children = []
       node.isFolder = false
     }
