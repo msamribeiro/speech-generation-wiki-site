@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: none
   locale: en-US
-  baseUrl: msamribeiro.github.io/speech-generation-wiki-site
+  baseUrl: wiki.msamribeiro.com
   ignorePatterns:
     - private
     - templates
