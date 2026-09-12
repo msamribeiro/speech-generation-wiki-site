@@ -34,25 +34,26 @@
   --callout-icon-quote: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path></svg>');
   --callout-icon-fold: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cpolyline points="6 9 12 15 18 9"%3E%3C/polyline%3E%3C/svg%3E');
 
+  // Catppuccin Latte accents (light mode default)
   &[data-callout] {
-    --color: #6366F1;
-    --border: #6366F144;
-    --bg: #6366F110;
+    --color: #1e66f5; // Blue
+    --border: #1e66f544;
+    --bg: #1e66f510;
     --callout-icon: var(--callout-icon-note);
   }
 
   &[data-callout="abstract"] {
-    --color: #3B82F6;
-    --border: #3B82F644;
-    --bg: #3B82F610;
+    --color: #209fb5; // Sapphire
+    --border: #209fb544;
+    --bg: #209fb510;
     --callout-icon: var(--callout-icon-abstract);
   }
 
   &[data-callout="info"],
   &[data-callout="todo"] {
-    --color: #0EA5E9;
-    --border: #0EA5E944;
-    --bg: #0EA5E910;
+    --color: #04a5e5; // Sky
+    --border: #04a5e544;
+    --bg: #04a5e510;
     --callout-icon: var(--callout-icon-info);
   }
 
@@ -61,39 +62,39 @@
   }
 
   &[data-callout="tip"] {
-    --color: #0891B2;
-    --border: #0891B244;
-    --bg: #0891B210;
+    --color: #179299; // Teal
+    --border: #17929944;
+    --bg: #17929910;
     --callout-icon: var(--callout-icon-tip);
   }
 
   &[data-callout="success"] {
-    --color: #09ad7a;
-    --border: #09ad7144;
-    --bg: #09ad7110;
+    --color: #40a02b; // Green
+    --border: #40a02b44;
+    --bg: #40a02b10;
     --callout-icon: var(--callout-icon-success);
   }
 
   &[data-callout="question"] {
-    --color: #dba642;
-    --border: #dba64244;
-    --bg: #dba64210;
+    --color: #df8e1d; // Yellow
+    --border: #df8e1d44;
+    --bg: #df8e1d10;
     --callout-icon: var(--callout-icon-question);
   }
 
   &[data-callout="warning"] {
-    --color: #db8942;
-    --border: #db894244;
-    --bg: #db894210;
+    --color: #fe640b; // Peach
+    --border: #fe640b44;
+    --bg: #fe640b10;
     --callout-icon: var(--callout-icon-warning);
   }
 
   &[data-callout="failure"],
   &[data-callout="danger"],
   &[data-callout="bug"] {
-    --color: #db4242;
-    --border: #db424244;
-    --bg: #db424210;
+    --color: #d20f39; // Red
+    --border: #d20f3944;
+    --bg: #d20f3910;
     --callout-icon: var(--callout-icon-failure);
   }
 
@@ -106,9 +107,9 @@
   }
 
   &[data-callout="example"] {
-    --color: #7a43b5;
-    --border: #7a43b544;
-    --bg: #7a43b510;
+    --color: #7287fd; // Lavender
+    --border: #7287fd44;
+    --bg: #7287fd10;
     --callout-icon: var(--callout-icon-example);
   }
 
@@ -117,7 +118,69 @@
     --border: var(--lightgray);
     --callout-icon: var(--callout-icon-quote);
   }
+}
 
+// Catppuccin Mocha accents (dark mode)
+[saved-theme="dark"] .callout {
+  &[data-callout] {
+    --color: #89b4fa; // Blue
+    --border: #89b4fa44;
+    --bg: #89b4fa10;
+  }
+
+  &[data-callout="abstract"] {
+    --color: #74c7ec; // Sapphire
+    --border: #74c7ec44;
+    --bg: #74c7ec10;
+  }
+
+  &[data-callout="info"],
+  &[data-callout="todo"] {
+    --color: #89dceb; // Sky
+    --border: #89dceb44;
+    --bg: #89dceb10;
+  }
+
+  &[data-callout="tip"] {
+    --color: #94e2d5; // Teal
+    --border: #94e2d544;
+    --bg: #94e2d510;
+  }
+
+  &[data-callout="success"] {
+    --color: #a6e3a1; // Green
+    --border: #a6e3a144;
+    --bg: #a6e3a110;
+  }
+
+  &[data-callout="question"] {
+    --color: #f9e2af; // Yellow
+    --border: #f9e2af44;
+    --bg: #f9e2af10;
+  }
+
+  &[data-callout="warning"] {
+    --color: #fab387; // Peach
+    --border: #fab38744;
+    --bg: #fab38710;
+  }
+
+  &[data-callout="failure"],
+  &[data-callout="danger"],
+  &[data-callout="bug"] {
+    --color: #f38ba8; // Red
+    --border: #f38ba844;
+    --bg: #f38ba810;
+  }
+
+  &[data-callout="example"] {
+    --color: #b4befe; // Lavender
+    --border: #b4befe44;
+    --bg: #b4befe10;
+  }
+}
+
+.callout {
   &.is-collapsed {
     & > .callout-title > .fold-callout-icon {
       transform: rotateZ(-90deg);
