@@ -6,8 +6,7 @@ import * as ExternalPlugin from "./.quartz/plugins"
 // - _evidence/: internal evidence-digest folder under concepts/, not for direct navigation
 // - evidence/: dossiers, now linked directly from the concepts nav table instead
 // - comparisons/: currently empty
-// - reports/: currently empty
-// - papers/, concepts/: shown as a single clickable link to their index.md; children
+// - papers/, concepts/, reports/: shown as a single clickable link to their index.md; children
 //   cleared so hundreds of individual paper/concept entries don't expand beneath them
 ExternalPlugin.Explorer({
   filterFn: (node) =>
@@ -15,10 +14,11 @@ ExternalPlugin.Explorer({
     node.slugSegment !== "_evidence" &&
     node.slugSegment !== "evidence" &&
     node.slugSegment !== "comparisons" &&
-    node.slugSegment !== "reports" &&
     node.slugSegment !== "readme",
   mapFn: (node) => {
-    if (node.slugSegment === "papers" || node.slugSegment === "concepts") {
+    if (node.slugSegment === "papers" ||
+      node.slugSegment === "concepts" ||
+      node.slugSegment === "reports") {
       node.children = []
       node.isFolder = false
     }
@@ -27,7 +27,7 @@ ExternalPlugin.Explorer({
   // browser, so it cannot close over module-level constants — the order list must be
   // inlined here.
   sortFn: (a, b) => {
-    const sidebarOrder = ["start", "overview", "concepts", "papers", "log"]
+    const sidebarOrder = ["start", "overview", "concepts", "papers", "reports", "log"]
     const aRank = sidebarOrder.indexOf(a.slugSegment ?? "")
     const bRank = sidebarOrder.indexOf(b.slugSegment ?? "")
     if (aRank !== -1 || bRank !== -1) {
